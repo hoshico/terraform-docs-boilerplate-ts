@@ -1,0 +1,12 @@
+subnet public: cidrs の数（2）が availability_zones の数（1）と一致しません
+subnet public: サブネット ID が重複しています
+resource users: layout を指定する場合は subnet が必要です
+resource alb: subnet 'missing' が network.subnets に定義されていません
+resource rds: primary_standby には 2 つ以上の AZ が必要です
+dup: 通信 ID が重複しています
+dup: source 'ghost' が resources に定義されていません
+dup: destination 'ghost' が resources に定義されていません
+dup: source と destination が同じです
+via-outside: via 'users' は VPC 内（subnet を持つ）リソースである必要があります
+via-undefined: via 'nowhere' が resources に定義されていません
+via-same: via に source / destination と同じリソースは指定できません

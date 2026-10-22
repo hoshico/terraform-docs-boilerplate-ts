@@ -1,0 +1,27 @@
+{
+  "name": "terraform-docs-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.4.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "validate": "tsx scripts/validate.ts",
+    "generate": "pnpm run generate:csv && pnpm run generate:drawio",
+    "generate:csv": "tsx scripts/generate-csv.ts",
+    "generate:drawio": "tsx scripts/generate-drawio.ts",
+    "generate:svg": "tsx scripts/generate-svg.ts",
+    "typecheck": "tsc",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "ajv": "^8.20.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5",
+    "yaml": "^2.9.1"
+  }
+}

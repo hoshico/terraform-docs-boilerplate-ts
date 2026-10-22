@@ -1,0 +1,35 @@
+# 1 AZ・public サブネットなし（Internet Gateway を描かない）ケース
+network:
+  region: eu-west-1
+  vpc:
+    label: VPC
+    cidr: 10.1.0.0/16
+  availability_zones: [eu-west-1a]
+  subnets:
+    - id: app
+      label: App
+      type: private
+      cidrs: [10.1.0.0/24]
+    - id: db
+      label: DB
+      type: private
+      cidrs: [10.1.1.0/24]
+
+resources:
+  app:
+    type: aws_ecs
+    label: App
+    subnet: app
+    layout: per_az
+  db:
+    type: aws_rds
+    label: DB
+    subnet: db
+
+communications:
+  - id: app-to-db
+    source: app
+    destination: db
+    protocol: tcp
+    port: 5432
+    description: App to DB

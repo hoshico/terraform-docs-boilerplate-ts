@@ -1,0 +1,66 @@
+# スキーマは満たすが、整合性チェックで失敗するケース
+network:
+  region: ap-northeast-1
+  vpc:
+    label: VPC
+    cidr: 10.0.0.0/16
+  availability_zones: [ap-northeast-1a]
+  subnets:
+    - id: public
+      label: Public
+      type: public
+      cidrs: [10.0.0.0/24, 10.0.1.0/24]
+    - id: public
+      label: Public (duplicate)
+      type: public
+      cidrs: [10.0.2.0/24]
+
+resources:
+  users:
+    type: users
+    label: Users
+    layout: single
+  alb:
+    type: aws_alb
+    label: ALB
+    subnet: missing
+  rds:
+    type: aws_rds
+    label: RDS
+    subnet: public
+    layout: primary_standby
+
+communications:
+  - id: dup
+    source: users
+    destination: alb
+    protocol: tcp
+    port: 443
+    description: ok
+  - id: dup
+    source: ghost
+    destination: ghost
+    protocol: tcp
+    port: 443
+    description: unknown and same
+  - id: via-outside
+    source: alb
+    destination: rds
+    via: users
+    protocol: tcp
+    port: 5432
+    description: via outside VPC
+  - id: via-undefined
+    source: alb
+    destination: rds
+    via: nowhere
+    protocol: tcp
+    port: 5432
+    description: via undefined
+  - id: via-same
+    source: alb
+    destination: rds
+    via: rds
+    protocol: tcp
+    port: 5432
+    description: via equals destination

@@ -1,0 +1,3 @@
+# 依存パッケージのインストールスクリプトは実行しない（esbuild は optionalDependencies のバイナリを使う）
+allowBuilds:
+  esbuild: false

@@ -1,0 +1,105 @@
+# 3 AZ・single レイアウト・未定義アイコン・エスケープが必要な文字列を含むケース
+network:
+  region: us-east-1
+  vpc:
+    label: Main "VPC" & <test>
+    cidr: 172.16.0.0/16
+  availability_zones: [us-east-1a, us-east-1b, us-east-1c]
+  subnets:
+    - id: public
+      label: Public
+      type: public
+      cidrs: [172.16.0.0/24, 172.16.1.0/24, 172.16.2.0/24]
+    - id: app
+      label: App
+      type: private
+      cidrs: [172.16.10.0/24, 172.16.11.0/24, 172.16.12.0/24]
+    - id: db
+      label: DB
+      type: private
+      cidrs: [172.16.20.0/24, 172.16.21.0/24, 172.16.22.0/24]
+
+resources:
+  users:
+    type: users
+    label: Users
+  admins:
+    type: users
+    label: Admins
+  saas:
+    type: internet
+    label: External SaaS
+  alb:
+    type: aws_alb
+    label: ALB
+    subnet: public
+    layout: span
+  nat:
+    type: aws_nat_gateway
+    label: NAT
+    subnet: public
+  bastion:
+    type: aws_ec2
+    label: Bastion
+    subnet: public
+  app:
+    type: aws_ecs
+    label: App
+    subnet: app
+    layout: per_az
+  batch:
+    type: aws_ecs
+    label: Batch
+    subnet: app
+  db:
+    type: aws_rds
+    label: DB
+    subnet: db
+    layout: primary_standby
+
+communications:
+  - id: users-to-alb
+    source: users
+    destination: alb
+    protocol: tcp
+    port: 443
+    description: 'Comma, "quote" and | pipe'
+  - id: admins-to-bastion
+    source: admins
+    destination: bastion
+    protocol: tcp
+    port: 22
+    description: |-
+      複数行の
+      説明
+  - id: alb-to-app
+    source: alb
+    destination: app
+    protocol: tcp
+    port: 8080
+    description: ALB to app
+  - id: app-to-db
+    source: app
+    destination: db
+    protocol: tcp
+    port: 5432
+    description: App to DB
+  - id: batch-to-db
+    source: batch
+    destination: db
+    protocol: tcp
+    port: 5432
+    description: Batch to DB
+  - id: batch-to-app
+    source: batch
+    destination: app
+    protocol: udp
+    port: 53
+    description: Batch to app (upward)
+  - id: app-to-saas
+    source: app
+    destination: saas
+    via: nat
+    protocol: tcp
+    port: 443
+    description: App to SaaS via NAT

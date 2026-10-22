@@ -29,6 +29,7 @@
 
 `pnpm test`（Vitest）で以下を確認する。
 
-- `tests/fixtures/<ケース>/expected.*`（移行前の Python 版で生成したゴールデンファイル）と生成結果が一致する
+- `tests/fixtures/<ケース>/expected.*`（ゴールデンファイル）と生成結果が一致する
 - 不正な YAML で検証エラーになる
-- リポジトリの生成物（CSV・README の表・draw.io）が最新である
+
+リポジトリの生成物（CSV・README の表・draw.io）が最新であることは、CI の差分チェックで確認する。

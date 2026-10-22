@@ -16,8 +16,7 @@ test("リポジトリの通信要件 YAML は検証を通る", () => {
   expect(parseCommunication(VALID).ok).toBe(true);
 });
 
-test("整合性チェックのエラーが Python 版と一致する", () => {
-  // expected-errors.txt は移行前の Python 版（validate_communication.py）の出力
+test("整合性チェックのエラーが期待値と一致する", () => {
   const dir = join(FIXTURES, "invalid-references");
   const expected = readFileSync(join(dir, "expected-errors.txt"), "utf-8").trimEnd().split("\n");
   expect(errorsOf(readFileSync(join(dir, "communication.yaml"), "utf-8"))).toEqual(expected);

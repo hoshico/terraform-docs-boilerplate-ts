@@ -42,7 +42,6 @@ Terraformと設計ドキュメントの整合性を維持できる構成を目�
 
 ### 使用しない技術
 
-- Python（TypeScriptへ移行済み）
 - Valibot（既存のJSON Schemaを Ajv で再利用する）
 
 原則として、Terraform・TypeScript・既存CLIツールを利用する。
@@ -458,7 +457,7 @@ GitHub ActionsからAWSへアクセスする場合は、
 
 ### 実装時
 
-- 検証・生成スクリプトはTypeScriptで書く（Pythonを使用しない）
+- 検証・生成スクリプトはTypeScriptで書く
 - 必要以上に依存ライブラリを増やさない
 - Node.jsの標準モジュールを優先する
 - 生成処理を変更した場合は `pnpm test` を実行し、意図した差分であればゴールデンファイル（`tests/fixtures/`）を更新する

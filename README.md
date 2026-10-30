@@ -1,10 +1,10 @@
 # terraform-docs-boilerplate
 
-AWS の通信要件を YAML で管理し、Terraform と設計ドキュメント（CSV・draw.io・SVG）を同一リポジトリで生成・管理するためのボイラープレート。
+AWS の通信要件を YAML で管理し、Terraform と設計ドキュメント（CSV・draw.io・SVG）を同一リポジトリで管理するためのボイラープレート。
 
 ## 通信構成図
 
-`requirements/communication.yaml` から自動生成している。
+`requirements/communication.yaml` を正本として、AI が `docs/diagrams/communication.drawio` を編集する。編集規約は [docs/diagrams/AGENTS.md](docs/diagrams/AGENTS.md) を参照する。
 
 ![AWS Communication Diagram](docs/diagrams/communication.svg)
 
@@ -30,7 +30,7 @@ terraform-docs-boilerplate
 ├── scripts/        # 検証・生成用 TypeScript スクリプト
 ├── tests/          # 生成結果の回帰テスト（Vitest）
 ├── docs/           # 設計書・運用手順書
-│   ├── diagrams/   # 構成図（自動生成）
+│   ├── diagrams/   # 構成図（AI が YAML を基に編集）
 │   └── tables/     # 通信要件一覧 CSV（自動生成）
 └── .github/        # GitHub Actions・PR テンプレート
 ```
@@ -42,9 +42,9 @@ mise install                    # Terraform / Node.js / pnpm
 pnpm install
 
 pnpm validate                   # 通信要件 YAML の検証
-pnpm generate                   # CSV・README の表・draw.io を生成
+pnpm generate                   # CSV・README の表を生成
 pnpm generate:svg               # draw.io から SVG を生成（draw.io デスクトップが必要）
 pnpm test                       # 回帰テスト
 ```
 
-詳細な方針は [AGENTS.md](AGENTS.md)、開発環境は [docs/development-environment.md](docs/development-environment.md) を参照。
+詳細な方針は [AGENTS.md](AGENTS.md)、開発環境は [docs/README.md](docs/README.md) を参照。

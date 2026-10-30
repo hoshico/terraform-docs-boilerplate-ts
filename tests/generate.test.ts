@@ -7,9 +7,8 @@
 
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test } from "vitest";
 import { type CommunicationRequirements, loadCommunication } from "../scripts/lib/communication.ts";
-import { buildDiagram } from "../scripts/lib/diagram.ts";
 import { README_BEGIN, README_END, buildRows, replaceReadmeTable, toCsv } from "../scripts/lib/table.ts";
 
 const FIXTURES = join(import.meta.dirname, "fixtures");
@@ -38,10 +37,6 @@ describe.each(GOLDEN_CASES)("%s", (name) => {
     expect(replaceReadmeTable(template, buildRows(data))).toBe(read(join(dir, "expected-readme.md")));
   });
 
-  test("draw.io が期待値と一致する", () => {
-    vi.spyOn(console, "warn").mockImplementation(() => {});
-    expect(buildDiagram(data)).toBe(read(join(dir, "expected.drawio")));
-  });
 });
 
 describe("README の目印コメント", () => {

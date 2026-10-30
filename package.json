@@ -9,9 +9,8 @@
   },
   "scripts": {
     "validate": "tsx scripts/validate.ts",
-    "generate": "pnpm run generate:csv && pnpm run generate:drawio",
+    "generate": "pnpm run generate:csv",
     "generate:csv": "tsx scripts/generate-csv.ts",
-    "generate:drawio": "tsx scripts/generate-drawio.ts",
     "generate:svg": "tsx scripts/generate-svg.ts",
     "typecheck": "tsc",
     "test": "vitest run"
